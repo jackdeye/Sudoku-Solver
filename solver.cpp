@@ -10,6 +10,24 @@ void printBoard(int b[][9]){
 	}
 }
 
+bool isInRow(int b[][9], int row, int num){
+	for(int i = 0; i < 9; i++){
+		if(b[row][i]==num){
+			return true;
+		}
+	}
+	return false;
+}
+
+bool isInCol(int b[][9], int col, int num){
+	for(int i = 0; i < 9; i++){
+		if(b[i][col]==num){
+			return true;
+		}
+	}
+	return false;
+}
+
 int main(){
 	int board[9][9] =
 	{

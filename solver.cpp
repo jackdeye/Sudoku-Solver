@@ -17,34 +17,6 @@ bool isInBox(int b[][9], int row, int col, int num);
 
 bool solve(int b[][9]);
 
-void tester(int b[][9]){
-    int input = 0, output = 0, operation = 0, num = 0;
-    while(operation != -1){
-        output = 0;
-        std::cout << "1 for row check, 2 for col check, 3 for box check" << std::endl;
-        std::cin >> operation;
-        std::cout << "Enter Number to look for 1-9" << std::endl;
-        std::cin >> num;
-        if(operation == 1){
-            std::cout << "Enter a row 0-8:" << std::endl;
-            std::cin >> input;
-            output = isInRow(b, input, num);
-        }
-        if(operation == 2){
-            std::cout << "Enter a col 0-8" << std::endl;
-            std::cin >> input;
-            output = isInCol(b, input, num);
-        }
-        if(operation == 3){
-            std::cout << "Enter quadrant 0-8" << std::endl;
-            std::cin >> input;
-            output = isInBox(b, (input%3)*3, (input/3)*3, num);
-        }
-        if(output) std::cout << "True" << std::endl;
-        else std::cout << "False" << std::endl;
-    }
-}
-
 int main(){
 	int board[9][9] =
 	{
@@ -56,24 +28,11 @@ int main(){
 		{8,0,7,0,0,9,0,0,3},
 		{4,9,0,5,1,7,8,0,0},
 		{2,1,0,0,3,6,0,0,0},
-		{0,5,0,0,2,0,1,0,0}
+		{0,5,0,0,2,0,1,0,0},
 	};
-    int solvedBoard[9][9] = {
-        {4,8,3,9,2,1,6,5,7},
-        {9,6,7,3,4,5,8,2,1},
-        {2,5,1,8,7,6,4,9,3},
-        {5,4,8,1,3,2,9,7,6},
-        {7,2,9,5,6,4,1,3,8},
-        {1,3,6,7,9,8,2,4,5},
-        {3,7,2,6,8,9,5,1,4},
-        {8,1,4,2,5,3,7,6,9},
-        {6,9,5,4,1,7,3,8,2}       
-    };
+	std::cout<<isInBox(board, 0,0,6);
 	//defineBoard(board);
-	if(isFinished(solvedBoard)) std::cout << "This works" << std::endl;
-    printBoard(board);
-    if(solve(board)) printBoard(board);
-    //tester(board);
+	if(solve(board)) printBoard(board);
 }
 
 bool solve(int b[][9]){
@@ -83,23 +42,23 @@ bool solve(int b[][9]){
     for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){	
             while(!isFinished(b) && !solve(b)){
-		        if(b[i][j] == 0){
-			        if(isInBox(b,i,j,trial) || isInRow(b,i,trial) || isInCol(b,j,trial)){
-		    	        trial++;
-				        if(trial>9){
-					        return false;
-				        }
-			        }
-			    if(trial>9){
-				    return false;
-			    }
-			    b[i][j] = trial;
-			    trial = 1;
-			    solve(b);
-		        }
+		if(b[i][j] == 0){
+			if(isInBox(b,i,j,trial) || isInRow(b,i,trial) || isInCol(b,j,trial)){
+		    		trial++;
+				if(trial>9){
+					return false;
+				}
+			}
+			if(trial>9){
+				return false;
+			}
+			b[i][j] = trial;
+			trial = 1;
+			solve(b);
 		    }
-	        continue;
-	    }
+		}
+	    continue;
+	}
     }
     if(isFinished(b)) return true;
     else return false;

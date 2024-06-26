@@ -33,8 +33,22 @@ void solverUtils::defineBoard(int board[][9]){
 
 bool solverUtils::isFinished(int board[][9]){
 	for(int i = 0; i < 9; i++){
-		if(isInRow(board, i, 0)) return false;
+		for(int j = 1; j < 10; j++){
+            if(!isInRow(board, i, j)) return false;
+        }
 	}
+    for(int i = 0; i < 9; i++){
+		for(int j = 1; j < 10; j++){
+            if(!isInCol(board, i, j)) return false;
+        }
+	}
+    for(int i = 0; i<9; i+=3){
+        for(int j = 0; j<9; j+=3){
+            for(int num = 1; num < 10; num++){
+                if(!isInBox(board, i, j, num)) return false;
+            }
+        }
+    }
 	return true;
 }
 
@@ -96,3 +110,33 @@ bool solverUtils::isInCol(int b[][9], int col, int num){
 	}
 	return false;
 }
+
+bool solverUtils::solveSudoku(int board[][9]) {
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            if (board[row][col] == 0) { 
+                for (int num = 1; num <= 9; num++) { 
+                    if (!isInRow(board, row, num) && !isInCol(board, col, num) 
+                    && !isInBox(board, row, col, num)) {
+                        board[row][col] = num;
+                        if (solveSudoku(board)) {
+                            return true;
+                        }
+                        board[row][col] = 0; // undo the assignment
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+int (*solverUtils::solve(int board[][9]))[9] {
+    if (solveSudoku(board)) {
+        return board;
+    } else {
+        return nullptr;
+    }
+}
+

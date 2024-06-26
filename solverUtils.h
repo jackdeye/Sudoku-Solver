@@ -11,6 +11,8 @@ class solverUtils{
         bool isInRow(int b[][9], int row, int num);
         bool isInCol(int b[][9], int col, int num);
         bool isInBox(int b[][9], int row, int col, int num);
+        bool solveSudoku(int board[][9]);
+        int (*solve(int board[][9]))[9];
 };
 
 #endif //UTILS

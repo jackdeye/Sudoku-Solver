@@ -1,14 +1,32 @@
 #include <iostream>
+#include <cstdlib>
 #include "solverUtils.h"
 
 solverUtils::solverUtils(){
 }
 
-void solverUtils::defineBoard(int board[][9]){
-	std::string input = "";
+void clearConsole() {
+    #if defined(_WIN32) || defined(_WIN64)
+        std::system("CLS");
+    #elif defined(__APPLE__) || defined(__MACH__)
+        std::system("clear");
+    #elif defined(__linux__)
+        std::system("clear");
+    #else
+        for(int i = 0; i < 45; i++){
+            std::cout << '\n';
+    #endif
+
+
+}
+
+void solverUtils::defineBoard(int board[][9]){	
+    std::cout << "Please input a sudoku board: " << std::endl; 
+    std::string input = "";
 	int inputInt = 0;
 	for(int i = 0; i<9; i++){
 		for(int j = 0; j<9; j++){
+            clearConsole();
             solverUtils::printBoard(board,i,j);
 			std::cout << "Enter integer 1-9: ";
 			std::getline(std::cin, input);

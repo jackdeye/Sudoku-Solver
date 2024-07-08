@@ -1,3 +1,2 @@
 solverUtils.o: solverUtils.cpp solverUtils.h
-testSuite.o: testSuite.cpp solverUtils.h testBoards.h
 solver.o: solver.cpp solverUtils.h

@@ -4,7 +4,6 @@
 int main(){
 	solverUtils tools;
     int inputBoard[9][9] = {0};
-    std::cout << "Please input a sudoku board: " << std::endl; 
     tools.defineBoard(inputBoard);
     if(tools.solve(inputBoard)){
         std::cout << "The board is solvable! Here is the solution" << std::endl;
